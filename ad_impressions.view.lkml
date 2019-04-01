@@ -36,7 +36,7 @@ view: pinterest_ad_metrics_base_dimensions {
 
   dimension: revenue {
     type: number
-    sql:${TABLE}.total_conversions_value_in_micro_dollar;;
+    sql:${TABLE}.total_conversions_value_in_micro_dollar / 1000000;;
   }
 
   dimension: spend {
