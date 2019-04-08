@@ -18,10 +18,19 @@ view: pinterest_ad_impressions_adapter {
 view: pinterest_ad_metrics_base_dimensions {
   extension: required
 
-
+  # Click count is really low compared to other values, testing to see if aggregating multiple click columns creates more realistic values
   dimension: clicks {
     type: number
-    sql: ${TABLE}.total_click_page_visit ;;
+    sql:  IFNULL(${TABLE}.total_click_page_visit,0) +
+          IFNULL(${TABLE}.total_click_add_to_cart,0) +
+          IFNULL(${TABLE}.total_click_checkout,0) +
+          IFNULL(${TABLE}.total_click_custom,0) +
+          IFNULL(${TABLE}.total_click_lead,0) +
+          IFNULL(${TABLE}.total_click_search,0) +
+          IFNULL(${TABLE}.total_click_signup,0) +
+          IFNULL(${TABLE}.total_click_view_category,0) +
+          IFNULL(${TABLE}.total_click_watch_video,0)
+          ;;
   }
 
   dimension: conversions {
@@ -41,7 +50,7 @@ view: pinterest_ad_metrics_base_dimensions {
 
   dimension: spend {
     type: number
-    sql: ${TABLE}.spend_in_micro_dollar ;;
+    sql: ${TABLE}.spend_in_micro_dollar / 1000000 ;;
   }
 }
 
@@ -114,9 +123,11 @@ explore: pinterest_ad_impressions_ad_group_adapter {
   view_label: "Impressions by Ad Group"
 }
 
+# Was previously extending campaign, but based on Pinterest ERD, advertiser_report branches out into either ad_group or campaign
+# Ad_group is not a superset of campaign in pinterest data
 view: pinterest_ad_impressions_ad_group_adapter {
 #   extension: required
-extends: [pinterest_ad_impressions_campaign_adapter_base]
+extends: [pinterest_ad_impressions_adapter]
 sql_table_name: {{ fact.pinterest_ads_schema._sql }}.ad_group_report ;;
 
 dimension: ad_group_id {
@@ -159,4 +170,12 @@ view: pinterest_ad_impressions_ad_adapter {
     sql: CAST(${TABLE}.ad_id as STRING) ;;
   }
 
+}
+
+# Keyword components being used as placeholders
+
+explore: pinterest_ad_impressions_keyword_adapter {}
+
+view: pinterest_ad_impressions_keyword_adapter {
+  sql_table_name: SELECT 1 ;;
 }
