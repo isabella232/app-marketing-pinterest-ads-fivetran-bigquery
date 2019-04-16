@@ -32,7 +32,7 @@ view: pinterest_ad_group {
 
   dimension: bid_type {
     type: string
-    hidden: yes
+    hidden: no
 
   }
 
