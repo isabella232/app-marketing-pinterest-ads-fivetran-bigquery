@@ -162,13 +162,18 @@ view: pinterest_ad_impressions_ad_adapter {
 
   dimension: ad_id {
     hidden: yes
-    type: number
+    sql: ${TABLE}.pin_id ;;
   }
 
   dimension: ad_id_string {
     hidden: yes
-    sql: CAST(${TABLE}.ad_id as STRING) ;;
+    sql: CAST(${TABLE}.pin_id as STRING) ;;
   }
+
+  dimension: campaign_id {
+    hidden: yes
+  }
+
 
 }
 
