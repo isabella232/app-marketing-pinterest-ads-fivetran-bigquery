@@ -15,6 +15,7 @@ view: pinterest_ad {
 
   dimension: _date {
     type: date
+    hidden: yes
     sql: ${TABLE}.created_time ;;
   }
 
