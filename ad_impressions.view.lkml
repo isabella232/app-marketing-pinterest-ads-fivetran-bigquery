@@ -21,15 +21,7 @@ view: pinterest_ad_metrics_base_dimensions {
   # Click count is really low compared to other values, testing to see if aggregating multiple click columns creates more realistic values
   dimension: clicks {
     type: number
-    sql:  IFNULL(${TABLE}.total_click_page_visit,0) +
-          IFNULL(${TABLE}.total_click_add_to_cart,0) +
-          IFNULL(${TABLE}.total_click_checkout,0) +
-          IFNULL(${TABLE}.total_click_custom,0) +
-          IFNULL(${TABLE}.total_click_lead,0) +
-          IFNULL(${TABLE}.total_click_search,0) +
-          IFNULL(${TABLE}.total_click_signup,0) +
-          IFNULL(${TABLE}.total_click_view_category,0) +
-          IFNULL(${TABLE}.total_click_watch_video,0)
+    sql: ${TABLE}.clickthrough_1
           ;;
   }
 
