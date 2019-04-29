@@ -168,13 +168,3 @@ view: pinterest_ad_impressions_ad_adapter {
 
 
 }
-
-# Keyword components being used as placeholders
-
-explore: pinterest_ad_impressions_keyword_adapter {
-  hidden: yes
-}
-
-view: pinterest_ad_impressions_keyword_adapter {
-  sql_table_name: SELECT 1 ;;
-}
