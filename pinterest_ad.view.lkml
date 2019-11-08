@@ -5,12 +5,13 @@ view: pinterest_ad {
   dimension: ad_group_id {
     type: string
     hidden: yes
+    sql: CAST(${TABLE}.ad_group_id AS STRING) ;;
   }
 
   dimension: ad_id {
     primary_key: yes
     hidden: yes
-    sql: ${TABLE}.pin_id ;;
+    sql: CAST(${TABLE}.id AS STRING);;
   }
 
   dimension: _date {
