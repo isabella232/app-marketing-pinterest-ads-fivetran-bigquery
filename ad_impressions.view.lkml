@@ -15,51 +15,9 @@ view: pinterest_ad_impressions_adapter {
   sql_table_name: {{ fact.pinterest_ads_schema._sql }}.advertiser_report ;;
 }
 
-view: pinterest_ad_metrics_base_dimensions {
-  extension: required
-
-  # Click count is really low compared to other values, testing to see if aggregating multiple click columns creates more realistic values
-  dimension: clicks {
-    type: number
-    sql: ${TABLE}.clickthrough_1;;
-    hidden: yes
-  }
-
-  dimension: conversions {
-    type: number
-    sql: ${TABLE}.total_conversions;;
-    hidden: yes
-  }
-
-  dimension: impressions {
-    type: number
-    sql: ${TABLE}.impression_1 ;;
-    hidden: yes
-  }
-
-  dimension: revenue {
-    type: number
-    sql:${TABLE}.total_conversions_value_in_micro_dollar / 1000000;;
-    hidden: yes
-  }
-
-  dimension: spend {
-    type: number
-    sql: ${TABLE}.spend_in_micro_dollar / 1000000 ;;
-    hidden: yes
-  }
-
-  dimension: weighted_average_position {
-    type: number
-    sql: 0 ;;
-    hidden: yes
-  }
-}
-
-
 view: pinterest_ad_impressions_adapter_base {
   extension: required
-  extends: [pinterest_ads_config, pinterest_ads_base, pinterest_ad_metrics_base_dimensions, ad_metrics_base]
+  extends: [pinterest_ads_config, pinterest_ads_base]
 
   dimension: account_id {
     hidden: yes
@@ -78,6 +36,42 @@ view: pinterest_ad_impressions_adapter_base {
 
   dimension: device {
     sql: 'NULL' ;;
+  }
+
+  dimension: clicks {
+    type: number
+    sql: ${TABLE}.clickthrough_1;;
+    hidden: yes
+  }
+
+  dimension: conversions {
+    type: number
+    sql: ${TABLE}.total_conversions;;
+    hidden: yes
+  }
+
+  dimension: impressions {
+    type: number
+    sql: ${TABLE}.impression_1 ;;
+    hidden: yes
+  }
+
+  dimension: conversionvalue {
+    type: number
+    sql:${TABLE}.total_conversions_value_in_micro_dollar / 1000000;;
+    hidden: yes
+  }
+
+  dimension: cost {
+    type: number
+    sql: ${TABLE}.spend_in_micro_dollar / 1000000 ;;
+    hidden: yes
+  }
+
+  dimension: weighted_average_position {
+    type: number
+    sql: 0 ;;
+    hidden: yes
   }
 
 }
